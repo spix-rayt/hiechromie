@@ -1,0 +1,4 @@
+rootProject.name = 'hiechromie'
+
+include 'hiechromie-core'
+include 'test-env'

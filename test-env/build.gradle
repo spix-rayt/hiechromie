@@ -13,8 +13,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
     compile group: 'io.projectreactor', name: 'reactor-core', version: '3.3.1.RELEASE'
-    compile project(":hiechromie-core")
-    kapt project(":hiechromie-core")
+    compile project(":core")
+    kapt project(":core")
 }
 
 compileKotlin {

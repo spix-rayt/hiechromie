@@ -1,4 +1,4 @@
-rootProject.name = 'hiechromie'
+rootProject.name = 'hyen'
 
-include 'hiechromie-core'
+include 'core'
 include 'test-env'

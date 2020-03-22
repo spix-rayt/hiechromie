@@ -1,4 +1,4 @@
-package io.spixy.hiechromie
+package io.spixy.hyen
 
 import java.nio.charset.StandardCharsets
 

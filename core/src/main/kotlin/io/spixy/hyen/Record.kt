@@ -1,6 +1,6 @@
-package io.spixy.hiechromie
+package io.spixy.hyen
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
-annotation class ChromieRecord {
+annotation class Record {
 }

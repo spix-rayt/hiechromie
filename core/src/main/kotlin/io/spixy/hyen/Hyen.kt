@@ -1,13 +1,12 @@
-package io.spixy.hiechromie
+package io.spixy.hyen
 
 import java.beans.Introspector
 import java.io.*
-import java.lang.reflect.Field
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
 import kotlin.random.Random
 
-class Hiechromie<T>(val context: T) {
+class Hyen {
     private lateinit var outputStream: FileOutputStream
     private lateinit var fileDescriptor: FileDescriptor
     private var maxId = 0L
@@ -38,7 +37,7 @@ class Hiechromie<T>(val context: T) {
         intToSpawner[code] = Spawner(clazz.name)
     }
 
-    fun write(obj: HieChromieRecord<T>) {
+    fun write(obj: HyenRecord) {
         if(obj.id == -1L) {
             obj.id = maxId + 1
         }
@@ -49,11 +48,11 @@ class Hiechromie<T>(val context: T) {
     }
 
     private fun handleObject(obj: Any?) {
-        if(obj is HieChromieRecord<*>) {
+        if(obj is HyenRecord) {
             if(obj.id > maxId) {
                 maxId = obj.id
             }
-            (obj as HieChromieRecord<T>).handle(context)
+            println(obj)
         }
     }
 
@@ -85,7 +84,7 @@ class Hiechromie<T>(val context: T) {
                 val dataBytesArrayOutputStream = ByteArrayOutputStream()
                 val dataBytes = DataOutputStream(dataBytesArrayOutputStream).use { dataOutputStream ->
                     for (propertyDescriptor in Introspector.getBeanInfo(obj.javaClass).propertyDescriptors) {
-                        if(propertyDescriptor.readMethod != null && propertyDescriptor.name != "class" || obj is HieChromieRecord<*> && propertyDescriptor.name == "id") {
+                        if(propertyDescriptor.readMethod != null && propertyDescriptor.name != "class" || obj is HyenRecord && propertyDescriptor.name == "id") {
                             val nameBytes = propertyDescriptor.name.toByteArray(StandardCharsets.UTF_8)
                             val valueBytes = toByteArray(propertyDescriptor.readMethod.invoke(obj))
                             dataOutputStream.writeShort(nameBytes.size)
@@ -146,7 +145,7 @@ class Hiechromie<T>(val context: T) {
     }
 
     class Spawner(val name: String) {
-        private val clazz by lazy { Class.forName("$name" + "ChromieRecordSpawner") }
+        private val clazz by lazy { Class.forName("$name" + "HyenRecordSpawner") }
         private val instance by lazy { clazz.newInstance() }
         private val method by lazy { clazz.getMethod("spawn", Map::class.java) }
 
